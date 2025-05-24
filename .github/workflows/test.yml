@@ -1,0 +1,81 @@
+name: Run Diameter of Binary Tree Tests
+
+on:
+  push:
+    paths:
+      - 'solutions/**'
+      - 'tests/**'
+  pull_request:
+    paths:
+      - 'solutions/**'
+      - 'tests/**'
+
+jobs:
+  check-solution-count:
+    runs-on: ubuntu-latest
+    outputs:
+      language: ${{ steps.get_language.outputs.language }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Count Modified Solution Files
+        id: get_language
+        run: |
+          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^solutions/' || true)
+          echo "Changed files: $changed_files"
+
+          count=$(echo "$changed_files" | wc -l)
+
+          if [ "$count" -gt 1 ]; then
+            echo "::error ::Multiple Solution codes Changed at a time and do not Run Tests"
+            exit 1
+          fi
+
+          if echo "$changed_files" | grep -q 'base'; then
+            echo "::error ::Base code detected. Aborting."
+            exit 1
+          fi
+
+          if echo "$changed_files" | grep -q '.c$'; then
+            echo "language=c" >> $GITHUB_OUTPUT
+          elif echo "$changed_files" | grep -q '.cpp$'; then
+            echo "language=cpp" >> $GITHUB_OUTPUT
+          elif echo "$changed_files" | grep -q '.py$'; then
+            echo "language=python" >> $GITHUB_OUTPUT
+          elif echo "$changed_files" | grep -q '.java$'; then
+            echo "language=java" >> $GITHUB_OUTPUT
+          else
+            echo "::error ::No known language changed."
+            exit 1
+
+  test:
+    needs: check-solution-count
+    runs-on: ubuntu-latest
+    if: ${{ needs.check-solution-count.outputs.language != '' }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run C Test
+        if: needs.check-solution-count.outputs.language == 'c'
+        run: |
+          sudo apt update && sudo apt install -y gcc
+          gcc tests/diameter_of_binary_tree_test.c solutions/diameter_of_binary_tree.c -o c_test
+          ./c_test
+
+      - name: Run C++ Test
+        if: needs.check-solution-count.outputs.language == 'cpp'
+        run: |
+          sudo apt update && sudo apt install -y g++
+          g++ tests/diameter_of_binary_tree_test.cpp solutions/diameter_of_binary_tree.cpp -o cpp_test
+          ./cpp_test
+
+      - name: Run Python Test
+        if: needs.check-solution-count.outputs.language == 'python'
+        run: |
+          python3 tests/diameter_of_binary_tree_test.py
+
+      - name: Run Java Test
+        if: needs.check-solution-count.outputs.language == 'java'
+        run: |
+          javac solutions/Solution.java tests/Test.java
+          java -cp solutions:tests Test
