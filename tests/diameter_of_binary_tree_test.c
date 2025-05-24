@@ -8,11 +8,8 @@ struct TreeNode {
     struct TreeNode *right;
 };
 
-// Function prototype
-int diameterOfBinaryTree(struct TreeNode* root);
-
 // Internal helper to calculate height
-int height(struct TreeNode* node, int* diameter) {
+static int height(struct TreeNode* node, int* diameter) {
     if (!node) return 0;
     int left = height(node->left, diameter);
     int right = height(node->right, diameter);

@@ -18,7 +18,7 @@ public class Test {
     public static int diameterOfBinaryTree(TreeNode root) {
         int[] diameter = new int[1]; // using array to hold diameter as reference
         height(root, diameter);
-        return diameter[0];
+        return diameter[0];   
     }
 
     private static boolean testDiameter(TreeNode root, int expected, String testName) {

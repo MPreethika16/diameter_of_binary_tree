@@ -9,7 +9,7 @@ def diameterOfBinaryTree(root):
 
     def height(node):
         nonlocal diameter
-        if not node:
+        if not node: 
             return 0
         left = height(node.left)
         right = height(node.right)
