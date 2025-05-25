@@ -8,7 +8,7 @@ public class Solution {
 class TreeNode {
     int val;
     TreeNode left;
-    TreeNode right;
+    TreeNode right; 
     TreeNode() { val = 0; left = null; right = null; }
     TreeNode(int x) { val = x; left = null; right = null; }
     TreeNode(int x, TreeNode left, TreeNode right) { this.val = x; this.left = left; this.right = right; }
