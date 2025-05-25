@@ -1,28 +1,16 @@
 public class Test {
-    
+
+    // TreeNode class (used by both the solution and the test)
     static class TreeNode {
         int val;
         TreeNode left, right;
         TreeNode(int x) { val = x; }
     }
 
-    // Helper method to compute height and update diameter
-    private static int height(TreeNode node, int[] diameter) {
-        if (node == null) return 0;
-        int left = height(node.left, diameter);
-        int right = height(node.right, diameter);
-        diameter[0] = Math.max(diameter[0], left + right);
-        return Math.max(left, right) + 1;
-    }
-
-    public static int diameterOfBinaryTree(TreeNode root) {
-        int[] diameter = new int[1]; // using array to hold diameter as reference
-        height(root, diameter);
-        return diameter[0];   
-    }
-
+    // Helper method to run a single test
     private static boolean testDiameter(TreeNode root, int expected, String testName) {
-        int result = diameterOfBinaryTree(root);
+        Solution sol = new Solution();  // uses external Solution class
+        int result = sol.diameterOfBinaryTree(root);
         System.out.println("Test: " + testName);
         System.out.println("Expected: " + expected);
         System.out.println("Result: " + result);
@@ -32,6 +20,7 @@ public class Test {
         return passed;
     }
 
+    // Main method with 15 test cases
     public static void main(String[] args) {
         int passedCount = 0;
         final int totalTests = 15;
@@ -145,6 +134,7 @@ public class Test {
         t15.right.right.left = new TreeNode(9);
         passedCount += testDiameter(t15, 6, "Complex Layout") ? 1 : 0;
 
+        // Final result
         System.out.println("Total Tests Passed: " + passedCount + " out of " + totalTests);
     }
 }
