@@ -3,7 +3,7 @@
 struct TreeNode {
     int val;
     struct TreeNode *left;
-    struct TreeNode *right;
+    struct TreeNode *right; 
 };
 
 static int height(struct TreeNode* node, int* diameter) {
