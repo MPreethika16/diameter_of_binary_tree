@@ -18,10 +18,22 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Fetch full Git history (needed for HEAD~1)
+        run: git fetch --prune --unshallow || true
+
       - name: Count Modified Solution Files
         id: get_language
+        shell: bash
         run: |
-          changed_files=$(git diff --name-only HEAD~1 HEAD | grep '^solutions/' || true)
+          # Determine base commit depending on event type
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            base_commit="origin/${{ github.base_ref }}"
+          else
+            base_commit="HEAD~1"
+          fi
+
+          echo "Comparing changes between $base_commit and HEAD"
+          changed_files=$(git diff --name-only "$base_commit" HEAD | grep '^solutions/' || true)
           echo "Changed files: $changed_files"
 
           count=$(echo "$changed_files" | wc -l)

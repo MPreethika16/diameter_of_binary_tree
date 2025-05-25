@@ -5,7 +5,7 @@ class TreeNode:
         self.right = right
 
 class Solution:
-    def diameterOfBinaryTree(self, root: TreeNode) -> int:
+    def diameterOfBinaryTree(self, root: TreeNode) -> int: 
         self.diameter = 0
 
         def height(node):
