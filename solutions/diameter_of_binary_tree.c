@@ -4,7 +4,7 @@
 struct TreeNode {
     int val;
     struct TreeNode *left;
-    struct TreeNode *right;
+    struct TreeNode *right; 
 };
 
 // Internal helper function
