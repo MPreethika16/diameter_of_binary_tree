@@ -1,14 +1,12 @@
 #include <stdlib.h>
 
-// Define the struct here
 struct TreeNode {
     int val;
     struct TreeNode *left;
     struct TreeNode *right;
 };
 
-// Internal helper function
-int height(struct TreeNode* node, int* diameter) {
+static int height(struct TreeNode* node, int* diameter) {
     if (!node) return 0;
     int left = height(node->left, diameter);
     int right = height(node->right, diameter);

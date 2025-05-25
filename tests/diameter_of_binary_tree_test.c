@@ -1,35 +1,17 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
+// Same struct definition as in solution file
 struct TreeNode {
     int val;
     struct TreeNode *left;
     struct TreeNode *right;
 };
 
-// Internal helper to calculate height
-static int height(struct TreeNode* node, int* diameter) {
-    if (!node) return 0;
-    int left = height(node->left, diameter);
-    int right = height(node->right, diameter);
-    if (*diameter < left + right) *diameter = left + right;
-    return (left > right ? left : right) + 1;
-}
-
-int diameterOfBinaryTree(struct TreeNode* root) {
-    int diameter = 0;
-    height(root, &diameter);
-    return diameter;
-}
-
-struct TreeNode* newNode(int val) {
-    struct TreeNode* node = malloc(sizeof(struct TreeNode));
-    node->val = val;
-    node->left = NULL;
-    node->right = NULL;
-    return node;
-}
+// Declare the functions defined in diameter_of_binary_tree.c
+extern struct TreeNode* newNode(int val);
+extern int diameterOfBinaryTree(struct TreeNode* root);
 
 bool testDiameter(struct TreeNode* root, int expected, const char* testName) {
     int result = diameterOfBinaryTree(root);
