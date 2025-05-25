@@ -59,6 +59,7 @@ jobs:
           else
             echo "::error ::No known language changed."
             exit 1
+          fi  # ← MISSING fi added here
 
   test:
     needs: check-solution-count
