@@ -8,7 +8,7 @@ struct TreeNode {
 };
 
 class Solution {
-public:
+public: 
     int diameterOfBinaryTree(TreeNode* root) {
         int diameter = 0;
         height(root, diameter);
