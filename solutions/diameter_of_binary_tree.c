@@ -6,7 +6,7 @@ struct TreeNode {
     struct TreeNode *left;
     struct TreeNode *right; 
 };
-
+ 
 // Internal helper function
 int height(struct TreeNode* node, int* diameter) {
     if (!node) return 0;
