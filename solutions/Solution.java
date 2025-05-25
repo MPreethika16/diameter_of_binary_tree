@@ -2,7 +2,7 @@ public class Solution {
     public int diameterOfBinaryTree(TreeNode root) {
         return 0; // stub - no actual solution
     }
-}
+} 
 
 // TreeNode class definition
 class TreeNode {
